@@ -93,7 +93,7 @@ const inputOperator = (operator) => {
 
     // VCalculation
     if(vCalculates.includes("*") || vCalculates.includes("+") || vCalculates.includes("-") || vCalculates.includes("/") || vCalculates.includes("%") || vCalculates.includes("^")){ 
-        vCalculates = prevNumber+" "+operator;
+        vCalculates = currentNumber+" "+operator;
     }
     else{
         vCalculates +=" "+operator;
