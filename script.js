@@ -89,16 +89,30 @@ const inputOperator = (operator) => {
         prevNumber = currentNumber;
     }
     calculationOperator = operator;
-    currentNumber = "";
+    
 
     // VCalculation
     if(vCalculates.includes("*") || vCalculates.includes("+") || vCalculates.includes("-") || vCalculates.includes("/") || vCalculates.includes("%") || vCalculates.includes("^")){ 
-        vCalculates = currentNumber+" "+operator;
+        vCalculates = prevNumber+" "+operator;
     }
     else{
         vCalculates +=" "+operator;
     }
+    currentNumber = "";
     updateScreen("");      
+}
+
+// countDecimals
+Number.prototype.countDecimals = function () {
+    if (Math.floor(this.valueOf()) === this.valueOf()) return 0;
+
+    var str = this.toString();
+    if (str.indexOf(".") !== -1 && str.indexOf("-") !== -1) {
+        return str.split("-")[1] || 0;
+    } else if (str.indexOf(".") !== -1) {
+        return str.split(".")[1].length || 0;
+    }
+    return str.split("-")[1] || 0;
 }
 
 const calculate = () => {
@@ -125,7 +139,13 @@ const calculate = () => {
         default:
             break;
     }
-    currentNumber = result;
+
+    // limit decimal value
+    if(result.countDecimals()>= 8 ){
+        currentNumber = result.toFixed(10);
+    }else{
+        currentNumber = result;
+    }
     calculationOperator = '';
 }
 
